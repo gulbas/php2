@@ -13,7 +13,7 @@
 		private $name;
 		private $price;
 		private $images = [];
-		private $imagesPath = './img/';
+		const IMAGESPATH = './img/';
 
 		public function __construct($id = null, $name = null, $price = null)
 		{
@@ -25,7 +25,7 @@
 
 		private function getAllImagesProduct()
 		{
-			$arrayImagesProduct = array_diff(scandir($this->imagesPath . $this->name, SCANDIR_SORT_NONE), ['..', '.']);
+			$arrayImagesProduct = array_diff(scandir(self::IMAGESPATH . $this->name, SCANDIR_SORT_NONE), ['..', '.']);
 
 			foreach ($arrayImagesProduct as $image) {
 				$this->images[] = $image;
@@ -34,24 +34,24 @@
 
 		private function prepareId()
 		{
-			return "<p id={$this->id}>{$this->id}</p>";
+			return "<p id={$this->id}>ID: {$this->id}</p>";
 		}
 
 		private function prepareName()
 		{
-			return "<p>{$this->name}</p>";
+			return "<p>Наименование: {$this->name}</p>";
 		}
 
 		private function preparePrice()
 		{
-			return "<p>{$this->price}</p>";
+			return '<p>Стоимость: ' . number_format($this->price, 2, ',', ' ') . ' &#8381; </p>';
 		}
 
 		private function prepareImages()
 		{
 			$imageView = null;
 			foreach ($this->images as $value) {
-				$imageView .= "<img  alt=\"{$this->name}\" src=\"./img/{$this->name}/{$value}\"></br>";
+				$imageView .= "<img  alt=\"{$this->name}\" src=\"" . self::IMAGESPATH . $this->name . "/{$value}\"></br>";
 			}
 			return $imageView;
 		}
