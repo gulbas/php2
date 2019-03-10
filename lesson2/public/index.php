@@ -1,9 +1,7 @@
 <?php
 
-	use app\model\Cart;
-	use app\model\Products;
+	use app\model\{Cart, Products, Orders};
 	use app\engine\Db;
-	use app\model\Orders;
 
 	include __DIR__ . '/../engine/Autoload.php';
 
