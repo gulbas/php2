@@ -31,6 +31,7 @@
 	}
 
 	Singleton::getSingle()->deleteRow(1);
-/*	// Check
-	$o = new Singleton();
+	/*	// Check
+		$o = new Singleton();
+	*/
 
