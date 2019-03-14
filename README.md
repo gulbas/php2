@@ -14,3 +14,8 @@ task  | file or folder name  |
 |  | lesson2/model/Cart.php |
 | 1* | lesson2/model/Product.php |
 | 2* | lesson2/model/Singletone.php |
+## lesson 3
+| task  | file or folder name  |
+| ------------- | ------------- |
+| 1 | lesson3/data/shop.sql |
+
