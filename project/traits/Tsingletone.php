@@ -6,7 +6,11 @@
 	{
 		private static $instance = null;
 
-		public static function getInstance()
+		/**
+		 * @static
+		 * @return self
+		 */
+		public static function getInstance(): self
 		{
 			if (static::$instance === null) {
 				static::$instance = new static();

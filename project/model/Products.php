@@ -2,7 +2,7 @@
 
 	namespace app\model;
 
-	class Products extends Model
+	class Products extends DbModel
 	{
 		public $id;
 		public $name;
@@ -14,7 +14,7 @@
 		public function __construct($id = null, $name = null, $description = null, $price = null, $quantity =
 		null, $category_id = null)
 		{
-			parent::__construct();
+//			parent::__construct();
 			$this->id = $id;
 			$this->name = $name;
 			$this->description = $description;
@@ -23,9 +23,14 @@
 			$this->category_id = $category_id;
 		}
 
-		public function getTableName(): string
+		public static function getTableName(): string
 		{
 			return 'products';
+		}
+
+		public static function relatedTable(): string
+		{
+			return 'category';
 		}
 	}
 
