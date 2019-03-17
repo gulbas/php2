@@ -27,7 +27,7 @@ task  | file or folder name  |
 |  |  	$product->delete();|
 |  |  	$product->update(); |
 | 5 |  	lesson3/model/Model.php - getAllObjects(), getOneObject()|
-## lesson 3
+## lesson 4
 ok
 
 
