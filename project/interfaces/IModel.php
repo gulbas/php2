@@ -4,14 +4,14 @@
 
 	interface IModel
 	{
-		public function getOne($id);
+		public static function getOne($id);
 
-		public function getOneObject($id);
+		public static function getOneObject($id);
 
-		public function getAll();
+		public static function getAll();
 
-		public function getAllObjects();
+		public static function getAllObjects();
 
-		public function getTableName();
+		public static function getTableName();
 
 	}

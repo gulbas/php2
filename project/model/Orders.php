@@ -2,7 +2,7 @@
 
 	namespace app\model;
 
-	class Orders extends Model
+	class Orders extends DbModel
 	{
 		public $id;
 		public $status;

@@ -1,13 +1,13 @@
 <?php
 
 	namespace app\engine;
-
-
 	use app\traits\Tsingletone;
 
 	class Db
 	{
 		use Tsingletone;
+
+		static public $chosenToStringMethod;
 
 		private $config = [
 			'drive'    => 'mysql',
@@ -20,15 +20,14 @@
 
 		private $connection = null;
 
-		private function getConnection()
+		private function getConnection(): ?\PDO
 		{
 			if ($this->connection === null) {
 				$this->connection = new \PDO(
-					$this->prepareDSNstr(),
+					$this->prepareDsnStr(),
 					$this->config['login'],
 					$this->config['password']
 				);
-				// var_dump('Подключение к БД');
 				$this->connection->setAttribute(
 					\PDO::ATTR_DEFAULT_FETCH_MODE,
 					\PDO::FETCH_ASSOC);
@@ -36,7 +35,7 @@
 			return $this->connection;
 		}
 
-		private function prepareDSNstr()
+		private function prepareDsnStr(): string
 		{
 			return sprintf('%s:host=%s;dbname=%s;charset=%s',
 				$this->config['drive'],
@@ -58,9 +57,9 @@
 			return true;
 		}
 
-		public function getLastId()
+		public function getLastId() : int
 		{
-			return $this->getConnection()->lastInsertId();
+			return $this->connection->lastInsertId();
 		}
 
 		public function queryOne($sql, $param = [])
@@ -85,5 +84,10 @@
 			$sth = $this->query($sql, $param);
 			$sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
 			return $sth->fetchAll();
+		}
+
+		public function __toString()
+		{
+			return 'Db';
 		}
 	}
