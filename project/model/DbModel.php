@@ -22,7 +22,6 @@
 			return Db::getInstance()->queryOneObject($sql, [':id' => $id], static::class);
 		}
 
-
 		public static function getAll($limit = null, $join = null): array
 		{
 			$tableName = static::getTableName();
@@ -84,9 +83,7 @@
 			$values = implode(', ', array_keys($params));
 
 			$sql = "INSERT INTO {$tableName} ( {$columns} ) VALUES( {$values} )";
-
 			Db::getInstance()->execute($sql, $params);
-
 			$this->id = Db::getInstance()->getLastId();
 		}
 

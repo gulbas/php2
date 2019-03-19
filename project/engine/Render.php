@@ -2,7 +2,9 @@
 
 	namespace app\engine;
 
-	class Render
+	use app\interfaces\IRenderer;
+
+	class Render implements IRenderer
 	{
 		public function renderTemplate($template, $params = []): string
 		{

@@ -2,14 +2,22 @@
 
 	namespace app\controllers;
 
-	class Controller
+	use app\interfaces\IRenderer;
+
+	class Controller implements IRenderer
 	{
 		private $action;
 		private const DEFAULT_ACTION = 'index';
 		private $layout = 'main';
 		private $useLayout = true;
+		private $renderer;
 
-		public function runAction($action = null)
+		public function __construct(IRenderer $renderer)
+		{
+			$this->renderer = $renderer;
+		}
+
+		public function runAction($action = null): void
 		{
 			$this->action = $action ?: self::DEFAULT_ACTION;
 
@@ -22,7 +30,7 @@
 			}
 		}
 
-		public function render($template, $params = [])
+		public function render($template, $params = []): string
 		{
 			if ($this->useLayout) {
 				return $this->renderTemplate("layouts/{$this->layout}",
@@ -31,12 +39,8 @@
 			return $this->renderTemplate($template, $params);
 		}
 
-		public function renderTemplate($template, $params = [])
+		public function renderTemplate($template, $params = []): string
 		{
-			ob_start();
-			extract($params);
-			$templatePath = TEMPLATE_DIR . $template . '.php';
-			include $templatePath;
-			return ob_get_clean();
+			return $this->renderer->renderTemplate($template, $params);
 		}
 	}

@@ -1,6 +1,7 @@
 <?php
 
-	use app\engine\Autoload;
+	use app\engine\{Autoload, Render};
+
 	// use app\model\Products;
 
 	include __DIR__ . '/../engine/Autoload.php';
@@ -14,7 +15,7 @@
 	$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
 
 	if (class_exists($controllerClass)) {
-		$controller = new $controllerClass();
+		$controller = new $controllerClass(new Render());
 		$controller->runAction($actionName);
 	}
 
