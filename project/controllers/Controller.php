@@ -9,7 +9,7 @@
 		private $action;
 		private const DEFAULT_ACTION = 'index';
 		private $layout = 'main';
-		private $useLayout = true;
+		private $useLayout = false; // If the Twig is on, be sure to turn off this option.
 		private $renderer;
 
 		public function __construct(IRenderer $renderer)

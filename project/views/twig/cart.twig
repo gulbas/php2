@@ -1,0 +1,13 @@
+{% extends "layouts/main.twig" %}
+{% block content %}
+    <h1>Корзина</h1>
+    {% if cart|length > 0 %}
+        <ul>
+            {% for item in cart %}
+                <li>{{ item.name }} (количество: {{ item.quantity }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <em>В корзине пока ничего нет</em>
+    {% endif %}
+{% endblock %}
