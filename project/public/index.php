@@ -1,6 +1,7 @@
 <?php
 
 	use app\engine\Autoload;
+	// use app\model\Products;
 
 	include __DIR__ . '/../engine/Autoload.php';
 	include __DIR__ . '/../config/config.php';
@@ -17,3 +18,10 @@
 		$controller->runAction($actionName);
 	}
 
+
+	/*$product = Products::getOneObject(8);
+	$product->setQuantity(8);
+	$product->setCategoryId(4);
+	$product->update();
+	var_dump($product);
+	// $product->update();*/
