@@ -11,12 +11,12 @@
 		protected $quantity;
 		protected $category_id;
 		protected $properties = [
-			'id' => false,
-			'name' => false,
+			'id'          => false,
+			'name'        => false,
 			'description' => false,
-			'price' => false,
-			'quantity' => false,
-			'category_id' => false
+			'price'       => false,
+			'quantity'    => false,
+			'category_id' => false,
 		];
 
 		public function setName($name): void
@@ -49,7 +49,6 @@
 			$this->category_id = $category_id;
 		}
 
-
 		public function __construct($id = null, $name = null, $description = null, $price = null, $quantity =
 		null, $category_id = null)
 		{
@@ -65,10 +64,4 @@
 		{
 			return 'products';
 		}
-
-		public static function relatedTable(): string
-		{
-			return 'category';
-		}
 	}
-

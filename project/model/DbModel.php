@@ -23,25 +23,19 @@
 		}
 
 
-		public static function getAll(): array
+		public static function getAll($limit = null, $join = null): array
 		{
 			$tableName = static::getTableName();
 			$sql = "SELECT * FROM {$tableName}";
 
-			$controllerName = $_GET['c'] ?: 'product';
-			$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
-
-			if (method_exists(static::class, 'relatedTable')) {
-				$sql = static::getAllJoin();
-		    }
-
-			if (class_exists($controllerClass)) {
-				if (method_exists($controllerClass, 'pagination')) {
-					$pagination = $controllerClass::pagination();
-					$sql .= " LIMIT {$pagination[0]}, {$pagination[1]}";
-			   }
+			if ($join !== null) {
+				$sql = self::getAllJoin($join);
 			}
-	
+
+			if ($limit !== null) {
+				$sql .= " LIMIT {$limit[0]}, {$limit[1]}";
+			}
+
 			return Db::getInstance()->queryAll($sql);
 		}
 
@@ -52,21 +46,20 @@
 			return Db::getInstance()->queryAllObjects($sql, [], static::class);
 		}
 
-		public static function getAllJoin()
+		public static function getAllJoin($join)
 		{
 			$tableName = static::getTableName();
-			$relatedTable = static::relatedTable();
-			$classVars =  get_class_vars(static::class);
-			
+			$classVars = get_class_vars(static::class);
+
 			foreach ($classVars as $key => $value) {
-				if ($key === "{$relatedTable}_id" || $key === 'properties') continue;
+				if ($key === "{$join}_id" || $key === 'properties') continue;
 				$params["{$tableName}.{$key}"] = $value;
 			}
 			$values = implode(', ', array_keys($params));
 
-			$sql = "SELECT {$values}, {$relatedTable}.name AS {$relatedTable}_name 
-					FROM {$tableName} JOIN {$relatedTable} 
-					ON {$tableName}.{$relatedTable}_id = {$relatedTable}.id";
+			$sql = "SELECT {$values}, {$join}.name AS {$join}_name 
+					FROM {$tableName} JOIN {$join} 
+					ON {$tableName}.{$join}_id = {$join}.id";
 
 			return $sql;
 			// return Db::getInstance()->queryAll($sql);
@@ -111,7 +104,7 @@
 
 			foreach ($this as $key => $value) {
 				if ($key === 'id' || $key === 'created_at' || $key === 'properties') continue;
-				if ($this->properties[$key] != true) continue;
+				if ($this->properties[$key] !== true) continue;
 				$params[":{$key}"] = $value;
 				$values[$key] = ":{$key}";
 			}
@@ -135,14 +128,6 @@
 				$this->update();
 			}
 		}
-
-		// public static function queryWithLimit($start, $limit)
-		// {
-		// 	$tableName = static::getTableName();
-		// 	$sql = "SELECT * FROM {$tableName} LIMIT {$start}, {$limit}";
-
-		// 	return Db::getInstance()->queryAll($sql);
-		// }
 
 		abstract public static function getTableName();
 	}

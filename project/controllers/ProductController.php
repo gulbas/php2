@@ -5,39 +5,26 @@
 	use app\model\Products;
 
 	class ProductController extends Controller
-	{ 
-		public static $number = 3;
-		public static $page = 1; 
-		public static $start;
+	{
+		protected $number = 3;
+		protected $page = 1;
+		protected $start;
 
-		public function actionIndex()
+		public function actionIndex(): void
 		{
-			// TODO доделать универсальный клас с лимитами
-			
-
 			if ($_GET['page'] !== null) {
-				self::$page = (int)$_GET['page'];
+				$this->page = (int)$_GET['page'];
 			}
-
-			self::$start = self::$page * self::$number - self::$number;
-			// $catalog = Products::queryWithLimit($start, $this->number);
-			
-
-			$catalog = Products::getAll();
-			//  var_dump($this->number);
+			$this->start = $this->page * $this->number - $this->number;
+			$catalog = Products::getAll([$this->start, $this->number], 'category');
 
 			echo $this->render('catalog', ['catalog' => $catalog]);
 		}
 
-		public function actionItem()
+		public function actionItem(): void
 		{
 			$id = (int)$_GET['id'];
 			$product = Products::getOne($id);
 			echo $this->render('item', ['product' => $product]);
-		}
-
-		public static function pagination()
-		{
-			 return [self::$start, self::$number];
 		}
 	}
