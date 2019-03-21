@@ -15,7 +15,6 @@
 			if ($_GET['page'] !== null) {
 				$this->page = (int)$_GET['page'];
 			}
-		
 			
 			$this->number = $this->page * $this->number;
 

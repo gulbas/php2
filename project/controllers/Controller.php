@@ -4,13 +4,12 @@
 
 	use app\interfaces\IRenderer;
 
-
 	class Controller implements IRenderer
 	{
 		private $action;
 		private const DEFAULT_ACTION = 'index';
 		private $layout = 'main';
-		private $useLayout = true; // If the Twig is on, be sure to turn off this option.
+		private $useLayout = true; 
 		private $renderer;
 
 		public function __construct(IRenderer $renderer)
@@ -45,7 +44,7 @@
 			return $this->renderer->renderTemplate($template, $params);
 		}
 
-		public function renderJson($data): string
+		public function renderJson($data)
 		{
 			return $this->renderer->renderJson($data);
 		}
