@@ -15,9 +15,12 @@ $('#load_more').on('click', function () {
     let page = $(this).data('page');
     $.post('?c=product&a=page', {page: page},
         function (response, status) {
-            $('body').html(response);
+            let body = $('body');
+            body.html(response);
+            $('html, body').animate({scrollTop: $(document).height()}, 1500);
             console.log(status);
         }
     );
+
     return false;
 });
