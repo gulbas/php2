@@ -9,7 +9,7 @@
 		private $action;
 		private const DEFAULT_ACTION = 'index';
 		private $layout = 'main';
-		private $useLayout = true; 
+		private $useLayout = true;
 		private $renderer;
 
 		public function __construct(IRenderer $renderer)

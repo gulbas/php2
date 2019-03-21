@@ -6,14 +6,14 @@
 
 	class CartController extends Controller
 	{
-		public function actionAddProduct()
+		public function actionAddProduct(): void
 		{
 			$id = $_POST['id'];
 			$quantity = $_POST['quantity'];
 			Cart::addProduct($id, $quantity, $this);		
 		}
 
-		public function actionIndex()
+		public function actionIndex(): void
 		{
 			$cart = Cart::getCart();
 			echo $this->render('cart', [

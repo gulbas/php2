@@ -34,6 +34,31 @@ class ProductController extends Controller
                 'item' => $this->loadItem]);
     }
 
+    public function actionPage(): void
+    {
+	    if ($_POST['page'] !== null) {
+		    $this->page = (int) $_POST['page'];
+	    }
+
+	    $this->number = $this->page * $this->number;
+	    $catalog = Products::getAll([(int) $this->start, (int) $this->number], 'category');
+	    ++$this->page;
+	    $numProduct = count(Products::getAll()) - $this->number;
+
+	    if ($numProduct < $this->loadItem) {
+		    $this->loadItem = $numProduct;
+	    }
+
+	    $render = $this->render('catalog',
+		    ['catalog' => $catalog,
+		     'counter' => [
+			     'numProduct' => $numProduct,
+			     'pagesLeft' => $this->page],
+		     'item' => $this->loadItem]);
+
+	    echo $render;
+    }
+
     public function actionItem(): void
     {
         $id = (int) $_GET['id'];

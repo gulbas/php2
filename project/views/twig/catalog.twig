@@ -17,8 +17,11 @@
         </div>
     {% endfor %}
     {% if counter.numProduct >= 0 %}
-    <div class="d-flex justify-content-center mb-5">
-        <a class="btn btn-outline-primary" href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>
-    </div>
+        <div class="d-flex justify-content-center mb-5">
+            <a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"
+               href="#">Загрузить ещё {{ item }}</a>
+            {#<a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"#}
+               {#href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>#}
+        </div>
     {% endif %}
 {% endblock %}
