@@ -4,9 +4,9 @@
 
 	class Cart extends DbModel
 	{
-		static $id;
+		public static $id;
 
-		public static function addProduct(int $id, $quantity, $render)
+		public static function addProduct(int $id, $quantity, $render): void
 		{
 			if (isset($id)) {
 				static::$id = $id;
@@ -59,7 +59,8 @@
 			}
 		}
 
-		public static function getCart() {
+		public static function getCart(): array
+		{
 			$cart = [];
 
 			if (isset($_SESSION['cart'])) {

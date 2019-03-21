@@ -30,6 +30,8 @@ task  | file or folder name  |
 ## lesson 4
 ok
 ## lesson 5
-ok
+`composer install`
+
+
 
 

@@ -2,7 +2,7 @@
 
 	namespace app\controllers;
 
-	use app\model\{Cart, Products};
+	use app\model\{Cart};
 
 	class CartController extends Controller
 	{
