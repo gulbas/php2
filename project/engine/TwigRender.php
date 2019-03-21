@@ -8,10 +8,22 @@
 
 	class TwigRender implements IRenderer
 	{
-		public function renderTemplate($template, $params = []): string
+		private $twig;
+
+		public function __construct()
 		{
 			$loader = new FilesystemLoader(TWIG_DIR);
-			$twig = new Environment($loader);
-			return $twig->render($template . '.twig', $params);
+			return	$this->twig = new Environment($loader);
+		}
+
+		public function renderTemplate($template, $params = []): string
+		{
+			return $this->twig->render($template . '.twig', $params);
+		}
+
+		public function renderJson($data): void
+		{
+			header('Content-type: application/json');
+			echo json_encode($data);
 		}
 	}

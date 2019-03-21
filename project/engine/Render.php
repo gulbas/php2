@@ -2,9 +2,9 @@
 
 	namespace app\engine;
 
-	use app\interfaces\{IRenderer, IRenderJson};
+	use app\interfaces\{IRenderer};
 
-	class Render implements IRenderer, IRenderJson
+	class Render implements IRenderer
 	{
 		public function renderTemplate($template, $params = []): string
 		{
@@ -22,5 +22,4 @@
 			header('Content-type: application/json');
 			echo json_encode($data);
 		}
-
 	}

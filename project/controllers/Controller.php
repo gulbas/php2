@@ -3,7 +3,6 @@
 	namespace app\controllers;
 
 	use app\interfaces\IRenderer;
-	use app\interfaces\IRenderJson;
 
 	class Controller implements IRenderer
 	{
@@ -12,12 +11,10 @@
 		private $layout = 'main';
 		private $useLayout = false; // If the Twig is on, be sure to turn off this option.
 		private $renderer;
-		private $renderJson;
 
-		public function __construct(IRenderer $renderer, IRenderJson $renderJson)
+		public function __construct(IRenderer $renderer)
 		{
 			$this->renderer = $renderer;
-			$this->renderJson = $renderJson;
 		}
 
 		public function runAction($action = null): void
@@ -47,9 +44,8 @@
 			return $this->renderer->renderTemplate($template, $params);
 		}
 
-		
 		public function renderJson($data): string
 		{
-			return $this->renderJson->renderJson($data);
+			return $this->renderer->renderJson($data);
 		}
 	}

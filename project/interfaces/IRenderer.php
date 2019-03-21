@@ -5,4 +5,5 @@
 	interface IRenderer
 	{
 		public function renderTemplate($template, $params = []);
+		public function renderJson($date);
 	}

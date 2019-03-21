@@ -17,7 +17,7 @@
 	$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
 
 	if (class_exists($controllerClass)) {
-		$controller = new $controllerClass(new TwigRender(), new Render);
+		$controller = new $controllerClass(new TwigRender());
 		$controller->runAction($actionName);
 	}
 
