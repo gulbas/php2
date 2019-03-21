@@ -13,7 +13,7 @@
 		public function __construct()
 		{
 			$loader = new FilesystemLoader(TWIG_DIR);
-			return	$this->twig = new Environment($loader);
+			return $this->twig = new Environment($loader);
 		}
 
 		public function renderTemplate($template, $params = []): string

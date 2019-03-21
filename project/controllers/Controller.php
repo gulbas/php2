@@ -4,12 +4,13 @@
 
 	use app\interfaces\IRenderer;
 
+
 	class Controller implements IRenderer
 	{
 		private $action;
 		private const DEFAULT_ACTION = 'index';
 		private $layout = 'main';
-		private $useLayout = false; // If the Twig is on, be sure to turn off this option.
+		private $useLayout = true; // If the Twig is on, be sure to turn off this option.
 		private $renderer;
 
 		public function __construct(IRenderer $renderer)
