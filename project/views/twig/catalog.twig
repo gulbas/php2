@@ -18,7 +18,7 @@
     {% endfor %}
     {% if counter.numProduct >= 0 %}
     <div class="d-flex justify-content-center mb-5">
-        <a class="btn btn-outline-primary" href="/?c=product&page= {{ counter.pagesLeft }}">Загрузить ещё</a>
+        <a class="btn btn-outline-primary" href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>
     </div>
     {% endif %}
 {% endblock %}
