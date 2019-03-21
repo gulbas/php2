@@ -23,7 +23,7 @@
 
 					if ($exist != -1) {
 						$_SESSION['cart']['items'][$exist]['quantity'] += $quantity;
-						Models::renderJson([
+						$this->renderJson([
 							'result' => 'OK',
 							'status' => 'update',
 							'errors' => null,
@@ -33,7 +33,7 @@
 							'id'       => $id,
 							'quantity' => $quantity,
 						];
-						Models::renderJson([
+						$this->renderJson([
 							'result' => 'OK',
 							'status' => 'new',
 							'errors' => null,
@@ -45,14 +45,14 @@
 						'id'       => $id,
 						'quantity' => $quantity,
 					];
-					Models::renderJson([
+					$this->renderJson([
 						'result' => 'OK',
 						'status' => 'new',
 						'errors' => null,
 					]);
 				}
 			} else {
-				Models::renderJson([
+				$this->renderJson([
 					'result' => 'ERROR',
 					'errors' => [
 						'Invalid POST data',

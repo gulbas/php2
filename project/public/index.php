@@ -1,6 +1,6 @@
 <?php
 
-	use app\engine\{Autoload, Render};
+	use app\engine\{Autoload, Render, TwigRender};
 
 	// use app\model\Products;
 
@@ -17,7 +17,7 @@
 	$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
 
 	if (class_exists($controllerClass)) {
-		$controller = new $controllerClass(new \app\engine\TwigRender());
+		$controller = new $controllerClass(new TwigRender(), new Render);
 		$controller->runAction($actionName);
 	}
 
