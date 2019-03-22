@@ -22,11 +22,19 @@
 			return Db::getInstance()->queryOneObject($sql, [':id' => $id], static::class);
 		}
 
-
-		public static function getAll(): array
+		public static function getAll($limit = null, $join = null): array
 		{
 			$tableName = static::getTableName();
 			$sql = "SELECT * FROM {$tableName}";
+
+			if ($join !== null) {
+				$sql = self::getAllJoin($join);
+			}
+
+			if ($limit !== null) {
+				$sql .= " LIMIT {$limit[0]}, {$limit[1]}";
+			}
+
 			return Db::getInstance()->queryAll($sql);
 		}
 
@@ -37,22 +45,23 @@
 			return Db::getInstance()->queryAllObjects($sql, [], static::class);
 		}
 
-		public static function getAllObjectJoin()
+		public static function getAllJoin($join)
 		{
 			$tableName = static::getTableName();
-			$relatedTable = static::relatedTable();
-			$classVars =  get_class_vars(static::class);
+			$classVars = get_class_vars(static::class);
+
 			foreach ($classVars as $key => $value) {
-				if ($key === "{$relatedTable}_id") continue;
+				if ($key === "{$join}_id" || $key === 'properties') continue;
 				$params["{$tableName}.{$key}"] = $value;
 			}
 			$values = implode(', ', array_keys($params));
 
-			$sql = "SELECT {$values}, {$relatedTable}.name AS {$relatedTable}_name 
-					FROM {$tableName} JOIN {$relatedTable} 
-					ON {$tableName}.{$relatedTable}_id = {$relatedTable}.id";
+			$sql = "SELECT {$values}, {$join}.name AS {$join}_name 
+					FROM {$tableName} JOIN {$join} 
+					ON {$tableName}.{$join}_id = {$join}.id";
 
-			return Db::getInstance()->queryAllObjects($sql, [], static::class);
+			return $sql;
+			// return Db::getInstance()->queryAll($sql);
 		}
 
 		/**
@@ -74,9 +83,7 @@
 			$values = implode(', ', array_keys($params));
 
 			$sql = "INSERT INTO {$tableName} ( {$columns} ) VALUES( {$values} )";
-
 			Db::getInstance()->execute($sql, $params);
-
 			$this->id = Db::getInstance()->getLastId();
 		}
 
@@ -87,15 +94,14 @@
 			return Db::getInstance()->execute($sql, [':id' => $this->id]);
 		}
 
-
 		public function update()
 		{
-			// TODO обновлять нужно если что-то изменилось
 			$tableName = static::getTableName();
 			$params = [];
 
 			foreach ($this as $key => $value) {
-				if ($key === 'id' || $key === 'created_at') continue;
+				if ($key === 'id' || $key === 'created_at' || $key === 'properties') continue;
+				if ($this->properties[$key] !== true) continue;
 				$params[":{$key}"] = $value;
 				$values[$key] = ":{$key}";
 			}

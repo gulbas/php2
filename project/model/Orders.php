@@ -20,7 +20,6 @@
 		 */
 		public function __construct($id = null, $status = null, $user_id = null, $product_id = null, $quantity = null)
 		{
-			parent::__construct();
 			$this->id = $id;
 			$this->status = $status;
 			$this->user_id = $user_id;
@@ -28,7 +27,7 @@
 			$this->quantity = $quantity;
 		}
 
-		public function getTableName()
+		public static function getTableName(): string
 		{
 			return 'orders';
 		}

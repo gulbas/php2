@@ -29,6 +29,9 @@ task  | file or folder name  |
 | 5 |  	lesson3/model/Model.php - getAllObjects(), getOneObject()|
 ## lesson 4
 ok
+## lesson 5
+`composer install`
+
 
 
 

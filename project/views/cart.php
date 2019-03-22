@@ -6,5 +6,5 @@
 		<?php endforeach; ?>
     </ul>
 <?php else: ?>
-<em>В корзине пока ничего нет</em>
+    <em>В корзине пока ничего нет</em>
 <?php endif; ?>
