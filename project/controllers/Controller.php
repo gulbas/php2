@@ -28,8 +28,13 @@
 			if (method_exists($this, $method)) {
 				$this->$method();
 			} else {
-				echo '404';
+				echo $this->render404();
 			}
+		}
+
+		public function render404(): string
+		{
+			return $this->render('404', [23]);
 		}
 
 		public function render($template, $params = []): string

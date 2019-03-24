@@ -43,6 +43,8 @@ ok
 - [x] User
     - [x] did authorization
     - [x] added personal area and views five last pages
+- [x] 404
+    - [x] added 404 visualization
     
 and other fixes and improvements.
 
