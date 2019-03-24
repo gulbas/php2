@@ -34,7 +34,7 @@ ok
 ## lesson 6
 `composer install`
 - [x] Products
-    - [x] fixed display buttons load more even at zero
+    - [x] fixed - the visibility of the "load more" button with a value of zero
     - [x] added async remove product
 - [x] Cart
     - [x] added async remove item cart
