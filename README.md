@@ -31,7 +31,20 @@ task  | file or folder name  |
 ok
 ## lesson 5
 `composer install`
-
+## lesson 6
+`composer install`
+- [x] Products
+    - [x] fixed display buttons load more even at zero
+    - [x] added async remove product
+- [x] Cart
+    - [x] added async remove item cart
+- [x] Admin
+    - [x] added page admin
+- [x] User
+    - [x] added login page and controller
+    - [x] added personal area and views five last pages
+    
+and other fixes and improvements.
 
 
 

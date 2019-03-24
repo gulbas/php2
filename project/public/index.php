@@ -1,9 +1,6 @@
 <?php
 
 	use app\engine\{Autoload, Render, TwigRender, Request};
-	use app\model\Products;
-
-	// use app\model\Products;
 
 	include __DIR__ . '/../engine/Autoload.php';
 	include __DIR__ . '/../config/config.php';
@@ -29,10 +26,3 @@
 	$product->update();
 	var_dump($product);
 	// $product->update();*/
-
-//	if (!isset($_SESSION['visited_pages'])) {
-//		$_SESSION['visited_pages'] = [];
-//	}
-//	$_SESSION['visited_pages'][] = [$_SERVER["REQUEST_URI"], 'Заголовок текущей страницы'];
-//	if (count($_SESSION['visited_pages']) > 5) array_shift($_SESSION['visited_pages']);
-//	var_dump($_SESSION['visited_pages']);

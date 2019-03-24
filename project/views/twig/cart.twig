@@ -3,7 +3,7 @@
     <ul>
         {% for item in cart %}
             <li>{{ item.name }} (количество: {{ item.quantity }})
-                <a href="/cart/remove/?id={{ item.id }}" data-id="{{ item.id }}">delete</a>
+                <a class="deleteItemCart" href="#" data-id="{{ item.id }}">delete</a>
             </li>
         {% endfor %}
     </ul>

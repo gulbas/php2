@@ -2,6 +2,7 @@
 
 	namespace app\controllers;
 
+	use app\engine\Request;
 	use app\model\Products;
 	use app\model\User;
 
@@ -32,7 +33,8 @@
 				 'counter' => [
 					 'numProduct' => $numProduct,
 					 'pagesLeft'  => $this->page],
-				 'item'    => $this->loadItem]);
+				 'item'    => $this->loadItem,
+				 'isAdmin' => User::isAdmin()]);
 		}
 
 		public function actionPage(): void
@@ -55,7 +57,8 @@
 				 'counter' => [
 					 'numProduct' => $numProduct,
 					 'pagesLeft'  => $this->page],
-				 'item'    => $this->loadItem]);
+				 'item'    => $this->loadItem,
+				 'isAdmin' => User::isAdmin()]);
 
 			echo $render;
 		}
@@ -72,5 +75,13 @@
 			$catalog = Products::getAll();
 			header('Content-type: application/json');
 			echo json_encode(['goods' => $catalog], JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
+		}
+
+		public function actionRemove(): void
+		{
+			$id = (new Request())->getParams()['id'];
+			$product = Products::getOneObject($id);
+			$product->delete();
+			header('Location: /');
 		}
 	}

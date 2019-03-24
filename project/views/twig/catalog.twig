@@ -13,13 +13,18 @@
             <p class="card-text"><b>Количество:</b> {{ product.quantity }} шт.</p>
             <p class="card-text"><b>Цена:</b> {{ product.price }} руб.</p>
         </div>
+        {% if isAdmin %}
+            <div class="card-footer d-flex justify-content-between">
+                <a href="#" class="card-link">edit</a>
+                <a data-id="{{ product.id }}" href="#" class="deleteProduct card-link
+                text-danger">delete</a>
+            </div>
+        {% endif %}
     </div>
 {% endfor %}
-    {% if counter.numProduct >= 0 %}
+    {% if counter.numProduct > 0 %}
         <div class="d-flex justify-content-center mb-5">
             <a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"
                href="#">Загрузить ещё {{ item }}</a>
-            {#<a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"#}
-            {#href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>#}
         </div>
     {% endif %}
