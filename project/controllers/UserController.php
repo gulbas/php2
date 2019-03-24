@@ -9,7 +9,7 @@
 		public function actionIndex(): void
 		{
 			$error = User::routeLogin();
-			echo $this->render('user', ['error' => $error]);
+			echo $this->render('user/main', ['error' => $error]);
 		}
 
 		public function actionHome(): void
@@ -25,7 +25,7 @@
 		{
 			// TODO ошибки авторизации
 			$error = null;
-			echo $this->render('register', ['error' => $error]);
+			echo $this->render('user/register', ['error' => $error]);
 		}
 
 		public function actionLogout(): void

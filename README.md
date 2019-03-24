@@ -41,7 +41,7 @@ ok
 - [x] Admin
     - [x] added page admin
 - [x] User
-    - [x] added login page and controller
+    - [x] did authorization
     - [x] added personal area and views five last pages
     
 and other fixes and improvements.
