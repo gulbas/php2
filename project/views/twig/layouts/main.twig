@@ -1,15 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-    {% block head %}
-        <meta charset="UTF-8">
-        <title>Document</title>
-        <link rel="stylesheet" href="/css/style.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-              crossorigin="anonymous">
-        <link rel="shortcut icon" href="img/logo.png">
-    {% endblock %}
+    <meta charset="UTF-8">
+    <title>Geekbrains PHP 2</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="shortcut icon" href="/img/logo.png">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -18,12 +16,27 @@
         Geekbrains PHP 2 </a>
     <div class="collapse navbar-collapse navbar-right" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+            {% if isAdmin %}
+                <li class="nav-item">
+                    <b><a class="nav-link" href="/admin">Панель Администратора</a></b>
+                </li>
+            {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="/?c=cart">Корзина</a>
+                <a class="nav-link" href="/cart">Корзина <span class="badge badge-primary badge-pill"
+                                                               id="count">{{ count }}</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/?c=login">Вход</a>
-            </li>
+            {% if isLoggedUser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout">Выход</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user">Вход</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -36,9 +49,7 @@
         crossorigin="anonymous"></script>
 <script src="/js/product.js" defer></script>
 <div class="footer">
-    {% block footer %}
-        &copy; Copyright 2019 by <a href="#">&amp;nbsp;</a>
-    {% endblock %}
+    &copy; Copyright 2019 by <a href="#">&amp;nbsp;</a>
 </div>
 </body>
 </html>

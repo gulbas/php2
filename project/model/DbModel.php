@@ -7,6 +7,10 @@
 
 	abstract class DbModel extends Models implements IModel
 	{
+		public function __call($name, $arguments)
+		{
+			return call_user_func_array($this->{$name}, $arguments);
+		}
 
 		public static function getOne($id)
 		{
@@ -61,7 +65,6 @@
 					ON {$tableName}.{$join}_id = {$join}.id";
 
 			return $sql;
-			// return Db::getInstance()->queryAll($sql);
 		}
 
 		/**
@@ -124,6 +127,21 @@
 			} else {
 				$this->update();
 			}
+		}
+
+		public static function getCountTableItem(): int
+		{
+			$tableName = static::getTableName();
+			$sql = "SELECT count(*) AS count FROM {$tableName}";
+			$arrayCount = Db::getInstance()->queryOne($sql);
+			return (int)$arrayCount['count'];
+		}
+
+		public static function getWhere($field, $value)
+		{
+			$tableName = static::getTableName();
+			$sql = "SELECT * FROM {$tableName} WHERE $field=:$field";
+			return Db::getInstance()->queryOne($sql, [$field => $value]);
 		}
 
 		abstract public static function getTableName();

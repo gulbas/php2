@@ -1,27 +1,25 @@
-{% block content %}
-    <h1>Каталог</h1>
-    {% for product in catalog %}
-        {#* {{ product }}#}
-        <div class="card mb-5 shadow-sm rounded bg-white">
-            <div class="card-header">
-                Категория: {{ product.category_name }}
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">
-                    <a href="?c=product&a=item&id={{ product.id }}">{{ product.name }}</a>
-                </h5>
-                <p class="card-text"><b>Описание:</b> {{ product.description }}</p>
-                <p class="card-text"><b>Количество:</b> {{ product.quantity }} шт.</p>
-                <p class="card-text"><b>Цена:</b> {{ product.price }} руб.</p>
-            </div>
+<h1>Каталог</h1>
+{% for product in catalog %}
+    {#* {{ product }}#}
+    <div class="card mb-5 shadow-sm rounded bg-white">
+        <div class="card-header">
+            Категория: {{ product.category_name }}
         </div>
-    {% endfor %}
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="/product/item/?id={{ product.id }}">{{ product.name }}</a>
+            </h5>
+            <p class="card-text"><b>Описание:</b> {{ product.description }}</p>
+            <p class="card-text"><b>Количество:</b> {{ product.quantity }} шт.</p>
+            <p class="card-text"><b>Цена:</b> {{ product.price }} руб.</p>
+        </div>
+    </div>
+{% endfor %}
     {% if counter.numProduct >= 0 %}
         <div class="d-flex justify-content-center mb-5">
             <a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"
                href="#">Загрузить ещё {{ item }}</a>
             {#<a id="load_more" data-page="{{ counter.pagesLeft }}" class="btn btn-outline-primary"#}
-               {#href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>#}
+            {#href="/?c=product&page={{ counter.pagesLeft }}">Загрузить ещё {{ item }}</a>#}
         </div>
     {% endif %}
-{% endblock %}
