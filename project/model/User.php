@@ -83,7 +83,7 @@
 			return isset($_SESSION['auth']['login']);
 		}
 
-		public function setCook(string $key, $value): void
+		public static function setCook(string $key, $value): void
 		{
 			setcookie(
 				$key,
@@ -96,7 +96,7 @@
 			);
 		}
 
-		public function resetCook(string $key): void
+		public static function resetCook(string $key): void
 		{
 			setcookie(
 				$key,
