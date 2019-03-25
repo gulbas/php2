@@ -2,15 +2,25 @@
 
 	namespace app\controllers;
 
+	use app\engine\Request;
 	use app\model\{Cart};
+	use app\interfaces\IRenderer;
 
 	class CartController extends Controller
 	{
+		private $request;
+
+		public function __construct(IRenderer $renderer)
+		{
+			parent::__construct($renderer);
+			$this->request = new Request();
+		}
+
 		public function actionAddProduct(): void
 		{
-			$id = $_POST['id'];
-			$quantity = $_POST['quantity'];
-			Cart::addProduct($id, $quantity, $this);		
+			$id = $this->request->getParams()['id'];
+			$quantity = $this->request->getParams()['quantity'];
+			Cart::addProduct($id, $quantity);
 		}
 
 		public function actionIndex(): void
@@ -19,5 +29,11 @@
 			echo $this->render('cart', [
 					'cart' => $cart]
 			);
+		}
+
+		public function actionRemove(): void
+		{
+			$id = $this->request->getParams()['id'];
+			Cart::delCartItem((int)$id);
 		}
 	}

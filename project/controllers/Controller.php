@@ -3,6 +3,8 @@
 	namespace app\controllers;
 
 	use app\interfaces\IRenderer;
+	use app\model\User;
+	use app\model\Visited;
 
 	class Controller implements IRenderer
 	{
@@ -26,15 +28,31 @@
 			if (method_exists($this, $method)) {
 				$this->$method();
 			} else {
-				echo '404';
+				echo $this->render404();
 			}
+		}
+
+		public function render404(): string
+		{
+			return $this->render('404', [23]);
 		}
 
 		public function render($template, $params = []): string
 		{
+			Visited::visitedPage();
+			$quantityOfGoodsInTheCart = $_SESSION['cart']['items'];
+			if ($quantityOfGoodsInTheCart === null || count($_SESSION['cart']['items']) === 0) {
+				$quantityOfGoodsInTheCart = null;
+			} else {
+				$quantityOfGoodsInTheCart = count($_SESSION['cart']['items']);
+			}
+
 			if ($this->useLayout) {
 				return $this->renderTemplate("layouts/{$this->layout}",
-					['content' => $this->renderTemplate($template, $params)]);
+					['content'      => $this->renderTemplate($template, $params),
+					 'count'        => $quantityOfGoodsInTheCart,
+					 'isLoggedUser' => User::isLoggedUser(),
+					 'isAdmin'      => User::isAdmin()]);
 			}
 			return $this->renderTemplate($template, $params);
 		}

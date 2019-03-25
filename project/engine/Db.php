@@ -1,6 +1,7 @@
 <?php
 
 	namespace app\engine;
+
 	use app\traits\Tsingletone;
 
 	class Db
@@ -57,7 +58,7 @@
 			return true;
 		}
 
-		public function getLastId() : int
+		public function getLastId(): int
 		{
 			return $this->connection->lastInsertId();
 		}
@@ -76,7 +77,11 @@
 		{
 			$sth = $this->query($sql, $param);
 			$sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
-			return $sth->fetch();
+			$obj = $sth->fetch();
+			$obj->info = function () {
+				echo 'hi';
+			};
+			return $obj;
 		}
 
 		public function queryAllObjects($sql, $param = [], $class): array

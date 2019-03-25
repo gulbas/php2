@@ -2,12 +2,15 @@
 
 	namespace app\model;
 
+	use app\engine\Render;
+
 	class Cart extends DbModel
 	{
 		public static $id;
 
-		public static function addProduct(int $id, $quantity, $render): void
+		public static function addProduct(int $id, $quantity): void
 		{
+			$result = [];
 			if (isset($id)) {
 				static::$id = $id;
 
@@ -22,52 +25,51 @@
 
 					if ($exist != -1) {
 						$_SESSION['cart']['items'][$exist]['quantity'] += $quantity;
-						$render->renderJson([
+						$result = [
 							'result' => 'OK',
 							'status' => 'update',
 							'errors' => null,
-						]);
+						];
 					} else {
 						$_SESSION['cart']['items'][] = [
 							'id'       => $id,
 							'quantity' => $quantity,
 						];
-						$render->renderJson([
+						$result = [
 							'result' => 'OK',
 							'status' => 'new',
 							'errors' => null,
-						]);
+						];
 					}
 				} else {
 					$_SESSION['cart']['items'][] = [
 						'id'       => $id,
 						'quantity' => $quantity,
 					];
-					$render->renderJson([
+					$result = [
 						'result' => 'OK',
 						'status' => 'new',
 						'errors' => null,
-					]);
+					];
 				}
 			} else {
-				$render->renderJson([
+				$result = [
 					'result' => 'ERROR',
 					'errors' => [
 						'Invalid POST data',
 					],
-				]);
+				];
 			}
+			$result += ['quantityOfGoodsInTheCart' => count($_SESSION['cart']['items'])];
+			(new Render())->renderJson($result);
 		}
 
 		public static function getCart(): array
 		{
 			$cart = [];
-
 			if (isset($_SESSION['cart'])) {
-				foreach ($_SESSION['cart']['items'] as $item) {
-
+				foreach ($_SESSION['cart']['items'] as $key => $item) {
 					$product = Products::getOne($item['id']);
-
 					$cart[] = [
 						'id'       => $item['id'],
 						'name'     => $product['name'],
@@ -77,6 +79,17 @@
 			}
 
 			return $cart;
+		}
+
+		public static function delCartItem($id): void
+		{
+			foreach ($_SESSION['cart']['items'] as $key => $item) {
+				if ($item['id'] === $id) {
+					unset($_SESSION['cart']['items'][$key]);
+				}
+			}
+
+			header('Location: /cart');
 		}
 
 		public static function getTableName(): string

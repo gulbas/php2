@@ -31,7 +31,22 @@ task  | file or folder name  |
 ok
 ## lesson 5
 `composer install`
-
+## lesson 6
+`composer install`
+- [x] Products
+    - [x] fixed - the visibility of the "load more" button with a value of zero
+    - [x] added async remove product
+- [x] Cart
+    - [x] added async remove item cart
+- [x] Admin
+    - [x] added page admin
+- [x] User
+    - [x] did authorization
+    - [x] added personal area and views five last pages
+- [x] 404
+    - [x] added 404 visualization
+    
+and other fixes and improvements.
 
 
 
