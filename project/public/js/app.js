@@ -16,6 +16,7 @@ $('#load_more').on('click', function () {
     let page = $(this).data('page');
     $.post('/product/page/', {page: page},
         function (response, status) {
+        // window.location.reload();
             let body = $('body');
             body.html(response);
             $('html, body').animate({scrollTop: $(document).height()}, 1500);
@@ -27,7 +28,6 @@ $('#load_more').on('click', function () {
 
 $('.deleteItemCart').on('click', function () {
     let id = $(this).data('id');
-    console.log('hi');
     $.post('/cart/remove/', {id: id},
         function (response) {
             let body = $('body');
@@ -39,7 +39,6 @@ $('.deleteItemCart').on('click', function () {
 
 $('.deleteProduct').on('click', function () {
     let id = $(this).data('id');
-    console.log('hi');
     $.post('/product/remove/', {id: id},
         function (response) {
             let body = $('body');
