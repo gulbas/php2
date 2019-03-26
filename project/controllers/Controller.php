@@ -32,9 +32,9 @@
 			}
 		}
 
-		public function render404(): string
+		public function render404($params = ['message' => 'Something went wrong. Get a hold of yourself!']): string
 		{
-			return $this->render('404', [23]);
+			return $this->render('404', $params);
 		}
 
 		public function render($template, $params = []): string

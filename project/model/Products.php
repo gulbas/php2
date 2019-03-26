@@ -19,6 +19,62 @@
 			'category_id' => false,
 		];
 
+		/**
+		 * @return null
+		 */
+		public function getId()
+		{
+			return $this->id;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getName()
+		{
+			return $this->name;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getDescription()
+		{
+			return $this->description;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getPrice()
+		{
+			return $this->price;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getQuantity()
+		{
+			return $this->quantity;
+		}
+
+		/**
+		 * @return null
+		 */
+		public function getCategoryId()
+		{
+			return $this->category_id;
+		}
+
+		/**
+		 * @return array
+		 */
+		public function getProperties(): array
+		{
+			return $this->properties;
+		}
+
 		public function setName($name): void
 		{
 			$this->properties['name'] = true;

@@ -48,5 +48,9 @@ ok
     
 and other fixes and improvements.
 
+## lesson 7
+- [x] Phpunit
+    - [x] dataProvider
+
 
 
