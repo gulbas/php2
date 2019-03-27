@@ -15,7 +15,7 @@
 		public function actionHome(): void
 		{
 			$login = $_SESSION['auth']['login'];
-			$user = User::getWhere('login', $login);
+			$user = User::getOneWhere('login', $login);
 			echo $this->render('home',
 				['user'                => $user,
 				 'lastFiveVisitedPage' => $_SESSION['visited_pages']]);

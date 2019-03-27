@@ -14,6 +14,7 @@
 			echo $this->render('admin/main');
 		}
 
+		// TODO доделать отображение всех товаров в админке со сменой статуса
 		public function actionOrder(): void
 		{
 			echo $this->render('admin/order');

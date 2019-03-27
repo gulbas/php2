@@ -37,7 +37,7 @@
 				$login = (new Request())->getParams()['login'];
 				$password = (new Request())->getParams()['password'];
 
-				$user = self::getWhere('login', $login);
+				$user = self::getOneWhere('login', $login);
 
 				if ($user) {
 
@@ -59,7 +59,7 @@
 
 		public static function loginUser(string $login, bool $remember = false): void
 		{
-			$user = self::getWhere('login', $login);
+			$user = self::getOneWhere('login', $login);
 
 			$_SESSION['auth'] = [
 				'id'    => $user['id'],

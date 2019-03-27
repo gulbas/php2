@@ -137,11 +137,18 @@
 			return (int)$arrayCount['count'];
 		}
 
-		public static function getWhere($field, $value)
+		public static function getOneWhere($field, $value)
 		{
 			$tableName = static::getTableName();
 			$sql = "SELECT * FROM {$tableName} WHERE $field=:$field";
 			return Db::getInstance()->queryOne($sql, [$field => $value]);
+		}
+
+		public static function getAllWhere($field, $value)
+		{
+			$tableName = static::getTableName();
+			$sql = "SELECT * FROM {$tableName} WHERE $field=:$field";
+			return Db::getInstance()->queryAll($sql, [$field => $value]);
 		}
 
 		abstract public static function getTableName();
