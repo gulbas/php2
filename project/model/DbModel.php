@@ -87,7 +87,7 @@
 
 			$sql = "INSERT INTO {$tableName} ( {$columns} ) VALUES( {$values} )";
 			Db::getInstance()->execute($sql, $params);
-			$this->id = Db::getInstance()->getLastId();
+			return $this->id = Db::getInstance()->getLastId();
 		}
 
 		public function delete()

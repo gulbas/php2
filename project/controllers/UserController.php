@@ -23,8 +23,7 @@
 
 		public function actionRegister(): void
 		{
-			// TODO ошибки авторизации
-			$error = null;
+			$error = User::register();
 			echo $this->render('user/register', ['error' => $error]);
 		}
 

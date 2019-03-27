@@ -114,6 +114,30 @@
 			return (isset($_SESSION['auth']['admin']) && $_SESSION['auth']['admin']);
 		}
 
+		public static function register() {
+			$error = null;
+			if (isset($_POST['reg_user'])) {
+				$email = htmlspecialchars($_POST['email']);
+				$name = htmlspecialchars($_POST['name']);
+				$login = htmlspecialchars($_POST['login']);
+				$password = htmlspecialchars($_POST['password']);
+				$password = password_hash($password, PASSWORD_DEFAULT);
+
+				if (!empty($name) && !empty($email) && !empty($password) && !empty($login)) {
+					$user = new User( null, $login, $password, $name, $email, null);
+					if ($user->insert() > 0) {
+
+					self::loginUser($login, true);
+					header("Location: /user/home");
+				}
+				} else {
+					$error = "Something went wrong";
+				}
+
+				return $error;
+			}
+		}
+
 		public static function getTableName(): string
 		{
 			return 'users';

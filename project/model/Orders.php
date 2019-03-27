@@ -2,32 +2,40 @@
 
 	namespace app\model;
 
+	use app\model\{User, OrderItem};
 	class Orders extends DbModel
 	{
 		public $id;
-		public $status;
+		public $created_at;
 		public $user_id;
-		public $product_id;
-		public $quantity;
+		public $status;
 
-		/**
-		 * Orders constructor.
-		 * @param $id {int} id order
-		 * @param $status {int} status order
-		 * @param $user_id {int} user id
-		 * @param $product_id {int} product id
-		 * @param $quantity {int} quantity
-		 */
-		public function __construct($id = null, $status = null, $user_id = null, $product_id = null, $quantity = null)
+		public function __construct($id = null, $created_at = null, $user_id = null, $status = null)
 		{
 			$this->id = $id;
-			$this->status = $status;
+			$this->created_at = $created_at;
 			$this->user_id = $user_id;
-			$this->product_id = $product_id;
-			$this->quantity = $quantity;
+			$this->status = $status;
 		}
 
-		public static function getTableName(): string
+		public static function addOrder() {
+			if (!User::isLoggedUser()) {
+				header('Location: /');
+			} else {
+				$userID = $_SESSION['auth']['id'];
+					if (isset($_SESSION['cart'])) {
+						$order = new Orders(null, null, $userID, 0);
+						$lastId = $order->insert();
+
+						if ($lastId > 0) {
+							OrderItem::addProduct($lastId);
+						}
+					}
+				 header('Location: /');
+		}
+	}
+
+	public static function getTableName(): string
 		{
 			return 'orders';
 		}
