@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 21 2019 г., 22:55
+-- Время создания: Мар 27 2019 г., 22:18
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.2
 
@@ -56,6 +56,14 @@ CREATE TABLE `orders` (
   `status` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `status`) VALUES
+(1, 1, 0),
+(2, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -68,6 +76,15 @@ CREATE TABLE `order_item` (
   `order_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `order_item`
+--
+
+INSERT INTO `order_item` (`id`, `product_id`, `order_id`, `quantity`) VALUES
+(1, 5, 1, 2),
+(2, 4, 2, 1),
+(3, 5, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -106,12 +123,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `quantity`, `categ
 (16, 'SAMSUNG Galaxy Note 18 ', 'Смартфон Apple iPhone XS MAX MT552RU/A 256Gb золотистый с корпусом из стекла с металлической рамой оснащен литиевой батареей высокой емкости. Устройство поддерживает технологию беспроводной зарядки и обладает водо- и пылезащитой по стандарту IP68.', '5040.00', 10, 1),
 (17, 'SAMSUNG Galaxy Note 19 ', 'Смартфон Apple iPhone XS MAX MT552RU/A 256Gb золотистый с корпусом из стекла с металлической рамой оснащен литиевой батареей высокой емкости. Устройство поддерживает технологию беспроводной зарядки и обладает водо- и пылезащитой по стандарту IP68.', '5040.00', 10, 1),
 (18, 'SAMSUNG Galaxy Note 16 ', 'Смартфон Apple iPhone XS MAX MT552RU/A 256Gb золотистый с корпусом из стекла с металлической рамой оснащен литиевой батареей высокой емкости. Устройство поддерживает технологию беспроводной зарядки и обладает водо- и пылезащитой по стандарту IP68.', '5040.00', 10, 1),
-(19, 'SAMSUNG Galaxy Note 17 ', 'Смартфон Apple iPhone XS MAX MT552RU/A 256Gb золотистый с корпусом из стекла с металлической рамой оснащен литиевой батареей высокой емкости. Устройство поддерживает технологию беспроводной зарядки и обладает водо- и пылезащитой по стандарту IP68.', '5040.00', 10, 1),
-(53, 'Телефон', 'Отличный вообще', '2000.00', 3, 1),
-(54, 'Балалайка', 'Крутая', '500.00', 2, 2),
-(55, 'SAMSUNG Galaxy S10+ 128Gb', 'Код: 1124189; ОС Android 9, экран: 6.4\", AMOLED, 2960×1440, процессор: Exynos 9820, , 8-ми ядерный, камера: 16Мп, GPS, ГЛОНАСС, с защитой от пыли и влаги, оперативная память: 8Гб, встроенная память: 128Гб', '76990.00', 1, 1),
-(57, 'Телефон5', 'Отличный вообще', '9999.00', 4, 1),
-(58, 'Отличный', 'Отличный вообще', '9999.00', 65, 1);
+(55, 'SAMSUNG Galaxy S10+ 128Gb', 'Код: 1124189; ОС Android 9, экран: 6.4\", AMOLED, 2960×1440, процессор: Exynos 9820, , 8-ми ядерный, камера: 16Мп, GPS, ГЛОНАСС, с защитой от пыли и влаги, оперативная память: 8Гб, встроенная память: 128Гб', '76990.00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -133,8 +145,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `email`) VALUES
-(1, 'admin', '123', 'Вася Пупкин', 'admin@pupkin.ru'),
-(2, 'user', '4231', 'Петя Сидоров', 'sidorov@sidorov.ru'),
+(1, 'admin', '$2y$10$IdcdDpRm25Ug55jFLY5Yu.38QpMEjRe0.gtx8ip1p1LWAmxj3N.RO', 'Вася Пупкин', 'admin@pupkin.ru'),
+(2, 'user', '$2y$10$IdcdDpRm25Ug55jFLY5Yu.38QpMEjRe0.gtx8ip1p1LWAmxj3N.RO', 'Петя Сидоров', 'sidorov@sidorov.ru'),
 (3, 'ssdfs', 'secretnii', 'Vasya', '234@ttt.ru'),
 (5, 'pulya2', 'secretnii', 'Vasya', 'vasya@vasya.vasya');
 
@@ -191,13 +203,13 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
