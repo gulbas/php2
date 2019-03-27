@@ -7,10 +7,10 @@
 
 	abstract class DbModel extends Models implements IModel
 	{
-/*		public function __call($name, $arguments)
-		{
-			return call_user_func_array($this->{$name}, $arguments);
-		}*/
+		/*		public function __call($name, $arguments)
+				{
+					return call_user_func_array($this->{$name}, $arguments);
+				}*/
 
 		public static function getOne($id)
 		{

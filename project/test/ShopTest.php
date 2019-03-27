@@ -1,6 +1,8 @@
 <?php
 
-	class ShopTest extends \PHPUnit\Framework\TestCase
+	use PHPUnit\Framework\TestCase;
+
+	class ShopTest extends TestCase
 	{
 		public function testAdd(): void
 		{

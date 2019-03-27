@@ -27,9 +27,9 @@
 		{
 			$cart = Cart::getCart();
 			echo $this->render('cart', [
-					'cart' => $cart, 
-					'isLoggedUser' => User::isLoggedUser()
-					]
+					'cart'         => $cart,
+					'isLoggedUser' => User::isLoggedUser(),
+				]
 			);
 		}
 

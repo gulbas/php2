@@ -9,12 +9,13 @@
 		public function actionIndex(): void
 		{
 			if (!User::isAdmin()) {
-				header("Location: /");
+				header('Location: /');
 			}
 			echo $this->render('admin/main');
 		}
 
-		public function actionOrder() {
+		public function actionOrder(): void
+		{
 			echo $this->render('admin/order');
 		}
 	}

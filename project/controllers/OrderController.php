@@ -6,7 +6,8 @@ use app\model\{Orders};
 
 class OrderController extends Controller 
 {
-    public function actionAdd() {
+    public function actionAdd(): void
+    {
         Orders::addOrder();
         
 		}

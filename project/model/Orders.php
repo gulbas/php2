@@ -3,6 +3,7 @@
 	namespace app\model;
 
 	use app\model\{User, OrderItem};
+
 	class Orders extends DbModel
 	{
 		public $id;
@@ -18,24 +19,25 @@
 			$this->status = $status;
 		}
 
-		public static function addOrder() {
+		public static function addOrder(): void
+		{
 			if (!User::isLoggedUser()) {
 				header('Location: /');
 			} else {
 				$userID = $_SESSION['auth']['id'];
-					if (isset($_SESSION['cart'])) {
-						$order = new Orders(null, null, $userID, 0);
-						$lastId = $order->insert();
+				if (isset($_SESSION['cart'])) {
+					$order = new Orders(null, null, $userID, 0);
+					$lastId = $order->insert();
 
-						if ($lastId > 0) {
-							OrderItem::addProduct($lastId);
-						}
+					if ($lastId > 0) {
+						OrderItem::addProduct($lastId);
 					}
-				 header('Location: /');
+				}
+				header('Location: /');
+			}
 		}
-	}
 
-	public static function getTableName(): string
+		public static function getTableName(): string
 		{
 			return 'orders';
 		}
