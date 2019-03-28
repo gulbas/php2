@@ -10,18 +10,17 @@
     </tr>
     </thead>
     <tbody>
-        {% for order in orders %}
-      
+    {% for order in orders %}
         <tr>
             <th scope="row">{{ order.id }}</th>
             <td>{{ order.created_at }}</td>
             <td>{{ order.users_name }}</td>
-                {% if order.status == 0 %}
-                    <td><a class="status" data-id="{{ order.id }}" href="?change={{ order.id }}">Обрабатывается</a></td>
-                {% else %}
-                    <td><a class="status" data-id="{{ order.id }}"  href="?change={{ order.id }}">Отправлен</a></td>
-                {% endif %}
+            {% if order.status == 0 %}
+                <td><a class="status" data-id="{{ order.id }}" href="#">Обрабатывается</a></td>
+            {% else %}
+                <td><a class="status" data-id="{{ order.id }}" href="#">Отправлен</a></td>
+            {% endif %}
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>

@@ -1,6 +1,6 @@
 <?php
 
-	use app\engine\{Autoload, Render, TwigRender, Request};
+	use app\engine\{Autoload, TwigRender, Request};
 
 //	include __DIR__ . '/../engine/Autoload.php';
 	include __DIR__ . '/../config/config.php';
@@ -27,7 +27,6 @@
 		$message = $e->getMessage();
 		echo $controller->render404(['message' => $message]);
 	}
-
 
 	/*$product = Products::getOneObject(8);
 	$product->setQuantity(8);

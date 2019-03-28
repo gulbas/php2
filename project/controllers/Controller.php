@@ -3,8 +3,7 @@
 	namespace app\controllers;
 
 	use app\interfaces\IRenderer;
-	use app\model\User;
-	use app\model\Visited;
+	use app\model\{User, Visited};
 
 	class Controller implements IRenderer
 	{

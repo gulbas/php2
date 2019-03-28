@@ -6,12 +6,12 @@
 
 	class User extends DbModel
 	{
-		public $id = null;
+		public $id;
 		public $login;
 		public $password;
 		public $name;
 		public $email;
-		public $created_at = null;
+		public $created_at;
 
 		public function __construct($id = null, $login = null, $password = null, $name = null, $email =
 		null, $created_at = null)
@@ -66,7 +66,7 @@
 				'login' => $user['login'],
 			];
 
-			if ($login == 'admin') {
+			if ($login === 'admin') {
 				$_SESSION['auth']['admin'] = true;
 			}
 
@@ -114,7 +114,8 @@
 			return (isset($_SESSION['auth']['admin']) && $_SESSION['auth']['admin']);
 		}
 
-		public static function register() {
+		public static function register()
+		{
 			$error = null;
 			if (isset($_POST['reg_user'])) {
 				$email = htmlspecialchars($_POST['email']);
@@ -124,14 +125,14 @@
 				$password = password_hash($password, PASSWORD_DEFAULT);
 
 				if (!empty($name) && !empty($email) && !empty($password) && !empty($login)) {
-					$user = new User( null, $login, $password, $name, $email, null);
+					$user = new User(null, $login, $password, $name, $email, null);
 					if ($user->insert() > 0) {
 
-					self::loginUser($login, true);
-					header("Location: /user/home");
-				}
+						self::loginUser($login, true);
+						header('Location: /user/home');
+					}
 				} else {
-					$error = "Something went wrong";
+					$error = 'Something went wrong';
 				}
 
 				return $error;

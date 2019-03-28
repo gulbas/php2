@@ -49,7 +49,6 @@ $('.deleteProduct').on('click', function () {
 
 $('.status').on('click', function () {
     let id = $(this).data('id');
-    console.log(id);
     $.post('/admin/order/', {change: id},
         function (response) {
             let body = $('body');

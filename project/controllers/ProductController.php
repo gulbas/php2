@@ -3,8 +3,7 @@
 	namespace app\controllers;
 
 	use app\engine\Request;
-	use app\model\Products;
-	use app\model\User;
+	use app\model\{Products, User};
 
 	class ProductController extends Controller
 	{

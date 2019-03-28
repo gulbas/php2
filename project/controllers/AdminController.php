@@ -3,7 +3,7 @@
 	namespace app\controllers;
 
 	use app\model\{User, Orders};
-	use app\engine\Request;	
+	use app\engine\Request;
 
 	class AdminController extends Controller
 	{
@@ -11,7 +11,7 @@
 		{
 			if (!User::isAdmin()) {
 				header('Location: /');
-			} 
+			}
 			echo $this->render('admin/main');
 		}
 
@@ -20,13 +20,10 @@
 			if (!User::isAdmin()) {
 				header('Location: /');
 			}
-			
 			$id = (new Request)->getParams()['change'];
-			
-			if ($id){
+			if ($id) {
 				Orders::change($id);
 			}
-
 			echo $this->render('admin/order', ['orders' => Orders::getAll(null, 'users')]);
-		}	
+		}
 	}
