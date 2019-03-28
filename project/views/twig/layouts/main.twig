@@ -18,26 +18,26 @@
         <ul class="navbar-nav ml-auto">
             {% if isAdmin %}
                 <li class="nav-item">
-                    <b><a class="nav-link" href="/admin">Панель Администратора</a></b>
+                    <b><a class="nav-link" href="/admin/">Панель Администратора</a></b>
                 </li>
             {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="/cart">Корзина <span class="badge badge-primary badge-pill"
+                <a class="nav-link" href="/cart/">Корзина <span class="badge badge-primary badge-pill"
                                                                id="count">{{ count }}</span></a>
             </li>
             {% if isLoggedUser %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/order">Заказы</a>
+                    <a class="nav-link" href="/order/">Заказы</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user">Личный кабинет</a>
+                    <a class="nav-link" href="/user/">Личный кабинет</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/user/logout">Выход</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/user">Вход</a>
+                    <a class="nav-link" href="/user/">Вход</a>
                 </li>
             {% endif %}
         </ul>

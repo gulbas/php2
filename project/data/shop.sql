@@ -52,7 +52,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
   `status` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,7 +60,7 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `status`) VALUES
+INSERT INTO `orders` (`id`, `users_id`, `status`) VALUES
 (1, 1, 0),
 (2, 1, 1);
 
@@ -72,7 +72,7 @@ INSERT INTO `orders` (`id`, `user_id`, `status`) VALUES
 
 CREATE TABLE `order_item` (
   `id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `products_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -81,7 +81,7 @@ CREATE TABLE `order_item` (
 -- Дамп данных таблицы `order_item`
 --
 
-INSERT INTO `order_item` (`id`, `product_id`, `order_id`, `quantity`) VALUES
+INSERT INTO `order_item` (`id`, `products_id`, `order_id`, `quantity`) VALUES
 (1, 5, 1, 2),
 (2, 4, 2, 1),
 (3, 5, 2, 1);
@@ -165,14 +165,14 @@ ALTER TABLE `category`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `orders_user_fk` (`user_id`);
+  ADD KEY `orders_user_fk` (`users_id`);
 
 --
 -- Индексы таблицы `order_item`
 --
 ALTER TABLE `order_item`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `order_item_product_fk` (`product_id`),
+  ADD KEY `order_item_product_fk` (`products_id`),
   ADD KEY `order_item_order_fk` (`order_id`);
 
 --
@@ -231,14 +231,14 @@ ALTER TABLE `users`
 -- Ограничения внешнего ключа таблицы `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_user_fk` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `order_item`
 --
 ALTER TABLE `order_item`
   ADD CONSTRAINT `order_item_order_fk` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `order_item_product_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `order_item_product_fk` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `products`

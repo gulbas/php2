@@ -27,7 +27,6 @@ $('#load_more').on('click', function () {
 
 $('.deleteItemCart').on('click', function () {
     let id = $(this).data('id');
-    console.log('hi');
     $.post('/cart/remove/', {id: id},
         function (response) {
             let body = $('body');
@@ -39,7 +38,6 @@ $('.deleteItemCart').on('click', function () {
 
 $('.deleteProduct').on('click', function () {
     let id = $(this).data('id');
-    console.log('hi');
     $.post('/product/remove/', {id: id},
         function (response) {
             let body = $('body');
@@ -48,3 +46,16 @@ $('.deleteProduct').on('click', function () {
     );
     return false;
 });
+
+$('.status').on('click', function () {
+    let id = $(this).data('id');
+    console.log(id);
+    $.post('/admin/order/', {change: id},
+        function (response) {
+            let body = $('body');
+            body.html(response);
+        }
+    );
+    return false;
+});
+

@@ -2,7 +2,8 @@
 
 	namespace app\controllers;
 
-	use app\model\User;
+	use app\model\{User, Orders};
+	use app\engine\Request;	
 
 	class AdminController extends Controller
 	{
@@ -10,13 +11,22 @@
 		{
 			if (!User::isAdmin()) {
 				header('Location: /');
-			}
+			} 
 			echo $this->render('admin/main');
 		}
 
-		// TODO доделать отображение всех товаров в админке со сменой статуса
 		public function actionOrder(): void
 		{
-			echo $this->render('admin/order');
-		}
+			if (!User::isAdmin()) {
+				header('Location: /');
+			}
+			
+			$id = (new Request)->getParams()['change'];
+			
+			if ($id){
+				Orders::change($id);
+			}
+
+			echo $this->render('admin/order', ['orders' => Orders::getAll(null, 'users')]);
+		}	
 	}

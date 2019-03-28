@@ -5,14 +5,14 @@
 	class OrderItem extends DbModel
 	{
 		public $id;
-		public $product_id;
+		public $products_id;
 		public $order_id;
 		public $quantity;
 
-		public function __construct($id = null, $product_id = null, $order_id = null, $quantity = null)
+		public function __construct($id = null, $products_id = null, $order_id = null, $quantity = null)
 		{
 			$this->id = $id;
-			$this->product_id = $product_id;
+			$this->products_id = $products_id;
 			$this->order_id = $order_id;
 			$this->quantity = $quantity;
 		}

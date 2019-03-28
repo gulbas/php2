@@ -77,7 +77,7 @@
 			$columns = [];
 
 			foreach ($this as $key => $value) {
-				if ($key === 'id' || $key === 'created_at') continue;
+				if ($key === 'id' || $key === 'created_at' || $key === 'properties') continue;
 				$params[":{$key}"] = $value;
 				$columns[] = $key;
 			}

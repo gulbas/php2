@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         {% for item in orders %}
-            <tr class="href">
+            <tr class="href" onclick="window.location.href='viewe/?id={{ item.id }}'">
                 <th scope="row">{{ item.id }}</th>
                 <td>{{ item.created_at }}</td>
                 {% if item.status == 0 %}
