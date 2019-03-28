@@ -33,6 +33,9 @@ ok
 `composer install`
 ## lesson 6
 `composer install`
+
+**Used for displaying twig templates**
+
 - [x] Products
     - [x] fixed - the visibility of the "load more" button with a value of zero
     - [x] added async remove product
@@ -49,8 +52,22 @@ ok
 and other fixes and improvements.
 
 ## lesson 7
+`composer install`
+
+&#x1F34E; **Used for displaying twig templates**
+
 - [x] Phpunit
     - [x] dataProvider
+- [x] Admin
+    - [x] order management added
+- [x] User
+    - [x] registration added
+    - [x] welcome page is fixed
+- [x] Order
+    - [x] view orders added
+- [x] Data
+    - [x] fixed a number of tables
+
 
 
 
