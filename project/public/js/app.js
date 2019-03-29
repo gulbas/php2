@@ -16,6 +16,7 @@ $('#load_more').on('click', function () {
     let page = $(this).data('page');
     $.post('/product/page/', {page: page},
         function (response, status) {
+        // window.location.reload();
             let body = $('body');
             body.html(response);
             $('html, body').animate({scrollTop: $(document).height()}, 1500);
