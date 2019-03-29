@@ -6,12 +6,12 @@
 
 	class User extends DbModel
 	{
-		public $id = null;
+		public $id;
 		public $login;
 		public $password;
 		public $name;
 		public $email;
-		public $created_at = null;
+		public $created_at;
 
 		public function __construct($id = null, $login = null, $password = null, $name = null, $email =
 		null, $created_at = null)
@@ -37,7 +37,7 @@
 				$login = (new Request())->getParams()['login'];
 				$password = (new Request())->getParams()['password'];
 
-				$user = self::getWhere('login', $login);
+				$user = self::getOneWhere('login', $login);
 
 				if ($user) {
 
@@ -59,14 +59,14 @@
 
 		public static function loginUser(string $login, bool $remember = false): void
 		{
-			$user = self::getWhere('login', $login);
+			$user = self::getOneWhere('login', $login);
 
 			$_SESSION['auth'] = [
 				'id'    => $user['id'],
 				'login' => $user['login'],
 			];
 
-			if ($login == 'admin') {
+			if ($login === 'admin') {
 				$_SESSION['auth']['admin'] = true;
 			}
 
@@ -112,6 +112,31 @@
 		public static function isAdmin(): bool
 		{
 			return (isset($_SESSION['auth']['admin']) && $_SESSION['auth']['admin']);
+		}
+
+		public static function register()
+		{
+			$error = null;
+			if (isset($_POST['reg_user'])) {
+				$email = htmlspecialchars($_POST['email']);
+				$name = htmlspecialchars($_POST['name']);
+				$login = htmlspecialchars($_POST['login']);
+				$password = htmlspecialchars($_POST['password']);
+				$password = password_hash($password, PASSWORD_DEFAULT);
+
+				if (!empty($name) && !empty($email) && !empty($password) && !empty($login)) {
+					$user = new User(null, $login, $password, $name, $email, null);
+					if ($user->insert() > 0) {
+
+						self::loginUser($login, true);
+						header('Location: /user/home');
+					}
+				} else {
+					$error = 'Something went wrong';
+				}
+
+				return $error;
+			}
 		}
 
 		public static function getTableName(): string

@@ -15,7 +15,7 @@
 		public function actionHome(): void
 		{
 			$login = $_SESSION['auth']['login'];
-			$user = User::getWhere('login', $login);
+			$user = User::getOneWhere('login', $login);
 			echo $this->render('home',
 				['user'                => $user,
 				 'lastFiveVisitedPage' => $_SESSION['visited_pages']]);
@@ -23,8 +23,7 @@
 
 		public function actionRegister(): void
 		{
-			// TODO ошибки авторизации
-			$error = null;
+			$error = User::register();
 			echo $this->render('user/register', ['error' => $error]);
 		}
 

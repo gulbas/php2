@@ -47,3 +47,15 @@ $('.deleteProduct').on('click', function () {
     );
     return false;
 });
+
+$('.status').on('click', function () {
+    let id = $(this).data('id');
+    $.post('/admin/order/', {change: id},
+        function (response) {
+            let body = $('body');
+            body.html(response);
+        }
+    );
+    return false;
+});
+

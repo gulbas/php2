@@ -1,20 +1,23 @@
-<div class="py-3">
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">
-                {{ product.name }}</h1>
-        </div>
-        <div class="card-body">
-            <p>Категория: {{ product.category_id }}</p>
-            <p>Описание: {{ product.description }}</p>
-            <p>Количество: {{ product.quantity }} шт.</p>
-            <p>Цена: {{ product.price }} руб.</p>
-            <div class="text-center">
-                <button class="btn btn-primary" id="add-product" data-id="{{ product.id }}">
-                    Добавить в корзину
-                </button>
+{% if product is empty %}
+    <h1>Извините, такого продукта у нас нет</h1>
+{% else %}
+    <div class="py-3">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">
+                    {{ product.name }}</h1>
             </div>
-
+            <div class="card-body">
+                <p>Категория: {{ product.category_id }}</p>
+                <p>Описание: {{ product.description }}</p>
+                <p>Количество: {{ product.quantity }} шт.</p>
+                <p>Цена: {{ product.price }} руб.</p>
+                <div class="text-center">
+                    <button class="btn btn-primary" id="add-product" data-id="{{ product.id }}">
+                        Добавить в корзину
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+{% endif %}

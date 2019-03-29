@@ -7,6 +7,13 @@
             </li>
         {% endfor %}
     </ul>
+    {% if isLoggedUser %}
+        <a href="/order/add/" class="btn btn-success">Оформить заказ</a>
+    {% else %}
+        <button disabled class="btn btn-success">
+            Оформить заказ (только для зарегистрированных пользователей)
+        </button>
+    {% endif %}
 {% else %}
     <em>В корзине пока ничего нет</em>
 {% endif %}

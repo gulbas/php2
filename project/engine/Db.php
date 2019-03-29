@@ -32,6 +32,9 @@
 				$this->connection->setAttribute(
 					\PDO::ATTR_DEFAULT_FETCH_MODE,
 					\PDO::FETCH_ASSOC);
+				$this->connection->setAttribute(
+					\PDO::ATTR_ERRMODE,
+					\PDO::ERRMODE_EXCEPTION);
 			}
 			return $this->connection;
 		}
@@ -78,9 +81,9 @@
 			$sth = $this->query($sql, $param);
 			$sth->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $class);
 			$obj = $sth->fetch();
-			$obj->info = function () {
-				echo 'hi';
-			};
+			if (!$obj) {
+				throw new \Exception('Объект не найден', 404);
+			}
 			return $obj;
 		}
 

@@ -3,8 +3,7 @@
 	namespace app\controllers;
 
 	use app\engine\Request;
-	use app\model\Products;
-	use app\model\User;
+	use app\model\{Products, User};
 
 	class ProductController extends Controller
 	{
@@ -66,8 +65,7 @@
 		public function actionItem(): void
 		{
 			$id = (int)$_GET['id'];
-			$product = Products::getOne($id);
-			echo $this->render('item', ['product' => $product]);
+			echo $this->render('item', ['product' => Products::getOne($id)]);
 		}
 
 		public function actionApiCatalog(): void

@@ -3,7 +3,7 @@
 	namespace app\controllers;
 
 	use app\engine\Request;
-	use app\model\{Cart};
+	use app\model\{Cart, User};
 	use app\interfaces\IRenderer;
 
 	class CartController extends Controller
@@ -27,7 +27,9 @@
 		{
 			$cart = Cart::getCart();
 			echo $this->render('cart', [
-					'cart' => $cart]
+					'cart'         => $cart,
+					'isLoggedUser' => User::isLoggedUser(),
+				]
 			);
 		}
 

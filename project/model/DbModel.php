@@ -7,10 +7,10 @@
 
 	abstract class DbModel extends Models implements IModel
 	{
-		public function __call($name, $arguments)
-		{
-			return call_user_func_array($this->{$name}, $arguments);
-		}
+		/*		public function __call($name, $arguments)
+				{
+					return call_user_func_array($this->{$name}, $arguments);
+				}*/
 
 		public static function getOne($id)
 		{
@@ -77,7 +77,7 @@
 			$columns = [];
 
 			foreach ($this as $key => $value) {
-				if ($key === 'id' || $key === 'created_at') continue;
+				if ($key === 'id' || $key === 'created_at' || $key === 'properties') continue;
 				$params[":{$key}"] = $value;
 				$columns[] = $key;
 			}
@@ -87,7 +87,7 @@
 
 			$sql = "INSERT INTO {$tableName} ( {$columns} ) VALUES( {$values} )";
 			Db::getInstance()->execute($sql, $params);
-			$this->id = Db::getInstance()->getLastId();
+			return $this->id = Db::getInstance()->getLastId();
 		}
 
 		public function delete()
@@ -137,11 +137,18 @@
 			return (int)$arrayCount['count'];
 		}
 
-		public static function getWhere($field, $value)
+		public static function getOneWhere($field, $value)
 		{
 			$tableName = static::getTableName();
 			$sql = "SELECT * FROM {$tableName} WHERE $field=:$field";
 			return Db::getInstance()->queryOne($sql, [$field => $value]);
+		}
+
+		public static function getAllWhere($field, $value)
+		{
+			$tableName = static::getTableName();
+			$sql = "SELECT * FROM {$tableName} WHERE $field=:$field";
+			return Db::getInstance()->queryAll($sql, [$field => $value]);
 		}
 
 		abstract public static function getTableName();

@@ -9,7 +9,7 @@
 			if (!isset($_SESSION['visited_pages'])) {
 				$_SESSION['visited_pages'] = [];
 			}
-			$_SESSION['visited_pages'][] = [$_SERVER["REQUEST_URI"]];
+			$_SESSION['visited_pages'][] = [$_SERVER['REQUEST_URI']];
 			if (count($_SESSION['visited_pages']) > 5) array_shift($_SESSION['visited_pages']);
 		}
 	}

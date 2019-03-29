@@ -1,23 +1,31 @@
 <?php
 
-	use app\engine\{Autoload, Render, TwigRender, Request};
+	use app\engine\{Autoload, TwigRender, Request};
 
-	include __DIR__ . '/../engine/Autoload.php';
+//	include __DIR__ . '/../engine/Autoload.php';
 	include __DIR__ . '/../config/config.php';
 	require_once __DIR__ . '/../vendor/autoload.php';
 
-
 	spl_autoload_register([new Autoload(), 'loadClass']);
-	$request = new Request();
 
-	$controllerName = $request->getControllerName() ?: 'product';
-	$actionName = $request->getActionName();
+	try {
+		$request = new Request();
 
-	$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
+		$controllerName = $request->getControllerName() ?: 'product';
+		$actionName = $request->getActionName();
 
-	if (class_exists($controllerClass)) {
-		$controller = new $controllerClass(new TwigRender());
-		$controller->runAction($actionName);
+		$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
+
+		if (class_exists($controllerClass)) {
+			$controller = new $controllerClass(new TwigRender());
+			$controller->runAction($actionName);
+		}
+	} catch (\PDOException $e) {
+		$message = "Ошибка PDO! {$e->getMessage()}";
+		echo $controller->render404(['message' => $message]);
+	} catch (\Exception $e) {
+		$message = $e->getMessage();
+		echo $controller->render404(['message' => $message]);
 	}
 
 	/*$product = Products::getOneObject(8);
