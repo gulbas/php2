@@ -2,27 +2,27 @@
 
 	namespace app\controllers;
 
-	use app\model\{Orders, User};
+	use app\engine\App;
 	use app\engine\Request;
 
 	class OrderController extends Controller
 	{
 		public function actionAdd(): void
 		{
-			if (!User::isLoggedUser()) {
+			if (!App::call()->userRepository->isLoggedUser()) {
 				header('Location: /');
 			} else {
-				Orders::addOrder();
+				App::call()->ordersRepository->addOrder();
 			}
 		}
 
 		public function actionIndex(): void
 		{
-			if (!User::isLoggedUser()) {
+			if (!App::call()->userRepository->isLoggedUser()) {
 				header('Location: /');
 			} else {
 				$user = $_SESSION['auth']['id'];
-				$orders = Orders::getAllWhere('users_id', $user);
+				$orders = App::call()->ordersRepository->getAllWhere('users_id', $user);
 				echo $this->render('user/order', [
 					'orders' => $orders,
 				]);
@@ -31,11 +31,11 @@
 
 		public function actionView(): void
 		{
-			if (!User::isLoggedUser()) {
+			if (!App::call()->userRepository->isLoggedUser()) {
 				header('Location: /');
 			} else {
 				$id = (new Request)->getParams()['id'];
-				$orders = Orders::view($id);
+				$orders = App::call()->ordersRepository->view($id);
 				echo $this->render('user/orderView', [
 					'orders' => $orders, 'orderId' => $id,
 				]);

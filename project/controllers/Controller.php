@@ -2,8 +2,9 @@
 
 	namespace app\controllers;
 
+	use app\engine\App;
 	use app\interfaces\IRenderer;
-	use app\model\{User, Visited};
+	use app\model\{Visited};
 
 	class Controller implements IRenderer
 	{
@@ -50,8 +51,8 @@
 				return $this->renderTemplate("layouts/{$this->layout}",
 					['content'      => $this->renderTemplate($template, $params),
 					 'count'        => $quantityOfGoodsInTheCart,
-					 'isLoggedUser' => User::isLoggedUser(),
-					 'isAdmin'      => User::isAdmin()]);
+					 'isLoggedUser' => App::call()->userRepository->isLoggedUser(),
+					 'isAdmin'      => App::call()->userRepository->isAdmin()]);
 			}
 			return $this->renderTemplate($template, $params);
 		}

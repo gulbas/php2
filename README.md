@@ -67,6 +67,13 @@ and other fixes and improvements.
     - [x] view orders added
 - [x] Data
     - [x] fixed a number of tables
+    
+## lesson 8
+ `composer install`
+ 
+ &#x1F34E; **Used for displaying twig templates**
+ 
+ - [x] Implemented in the project the structure of the application
 
 
 

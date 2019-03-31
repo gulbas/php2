@@ -10,9 +10,7 @@
 		{
 			ob_start();
 			extract($params);
-
-			$templatePath = TEMPLATE_DIR . $template . '.php';
-
+			$templatePath = App::call()->config['templates_dir'] . $template . '.php';
 			include $templatePath;
 			return ob_get_clean();
 		}

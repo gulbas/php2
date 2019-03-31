@@ -1,32 +1,38 @@
 <?php
+	session_start();
 
-	use app\engine\{Autoload, TwigRender, Request};
+	use app\engine\App;
 
-//	include __DIR__ . '/../engine/Autoload.php';
 	include __DIR__ . '/../config/config.php';
 	require_once __DIR__ . '/../vendor/autoload.php';
-
-	spl_autoload_register([new Autoload(), 'loadClass']);
+	$config = include __DIR__ . '/../config/config.php';
 
 	try {
-		$request = new Request();
-
-		$controllerName = $request->getControllerName() ?: 'product';
-		$actionName = $request->getActionName();
-
-		$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
-
-		if (class_exists($controllerClass)) {
-			$controller = new $controllerClass(new TwigRender());
-			$controller->runAction($actionName);
-		}
-	} catch (\PDOException $e) {
-		$message = "Ошибка PDO! {$e->getMessage()}";
-		echo $controller->render404(['message' => $message]);
-	} catch (\Exception $e) {
-		$message = $e->getMessage();
-		echo $controller->render404(['message' => $message]);
+		App::call()->run($config);
+	} catch (Exception $e) {
+		var_dump($e);
 	}
+
+
+	//	try {
+	//		$request = new Request();
+	//
+	//		$controllerName = $request->getControllerName() ?: 'product';
+	//		$actionName = $request->getActionName();
+	//
+	//		$controllerClass = "app\\controllers\\" . ucfirst($controllerName) . 'Controller';
+	//
+	//		if (class_exists($controllerClass)) {
+	//			$controller = new $controllerClass(new TwigRender());
+	//			$controller->runAction($actionName);
+	//		}
+	//	} catch (\PDOException $e) {
+	//		$message = "Ошибка PDO! {$e->getMessage()}";
+	//		echo $controller->render404(['message' => $message]);
+	//	} catch (\Exception $e) {
+	//		$message = $e->getMessage();
+	//		echo $controller->render404(['message' => $message]);
+	//	}
 
 	/*$product = Products::getOneObject(8);
 	$product->setQuantity(8);

@@ -1,51 +1,34 @@
 <?php
 
-	namespace app\model;
+	namespace app\model\repositories;
 
-	use app\engine\Request;
+	use app\engine\App;
+	use app\model\entities\User;
+	use app\model\Repository;
 
-	class User extends DbModel
+	class UserRepository extends Repository
 	{
-		public $id;
-		public $login;
-		public $password;
-		public $name;
-		public $email;
-		public $created_at;
-
-		public function __construct($id = null, $login = null, $password = null, $name = null, $email =
-		null, $created_at = null)
+		public function routeLogin()
 		{
-//			parent::__construct();
-			$this->id = $id;
-			$this->login = $login;
-			$this->password = $password;
-			$this->name = $name;
-			$this->email = $email;
-			$this->created_at = $created_at;
-		}
-
-		public static function routeLogin()
-		{
-			if (static::isLoggedUser()) {
+			if ($this->isLoggedUser()) {
 				header('Location: /user/home');
 			}
 
 			$error = false;
 
-			if (isset((new Request())->getParams()['login_user'])) {
-				$login = (new Request())->getParams()['login'];
-				$password = (new Request())->getParams()['password'];
+			if (isset(App::call()->request->getParams()['login_user'])) {
+				$login = App::call()->request->getParams()['login'];
+				$password = App::call()->request->getParams()['password'];
 
-				$user = self::getOneWhere('login', $login);
+				$user = App::call()->userRepository->getOneWhere('login', $login);
 
 				if ($user) {
 
 					if (password_verify($password, $user['password'])) {
-						if (isset((new Request())->getParams()['remember'])) {
-							self::loginUser($login, true);
+						if (isset(App::call()->request->getParams()['remember'])) {
+							$this->loginUser($login, true);
 						} else {
-							self::loginUser($login);
+							$this->loginUser($login);
 						}
 						header('Location: /user/home');
 					}
@@ -57,9 +40,9 @@
 			return $error;
 		}
 
-		public static function loginUser(string $login, bool $remember = false): void
+		public function loginUser(string $login, bool $remember = false): void
 		{
-			$user = self::getOneWhere('login', $login);
+			$user = $this->getOneWhere('login', $login);
 
 			$_SESSION['auth'] = [
 				'id'    => $user['id'],
@@ -74,47 +57,47 @@
 				$auth = [
 					'login' => $_SESSION['auth']['login'],
 				];
-				self::setCook('auth', json_encode($auth));
+				$this->setCook('auth', json_encode($auth));
 			}
 		}
 
-		public static function isLoggedUser(): bool
+		public function isLoggedUser(): bool
 		{
 			return isset($_SESSION['auth']['login']);
 		}
 
-		public static function setCook(string $key, $value): void
+		public function setCook(string $key, $value): void
 		{
 			setcookie(
 				$key,
 				$value,
 				time() + 3600 * 2, //seconds
 				'/',
-				'phpoop.local',
+				App::call()->config['site'],
 				true,
 				true
 			);
 		}
 
-		public static function resetCook(string $key): void
+		public function resetCook(string $key): void
 		{
 			setcookie(
 				$key,
 				'',
 				0,
 				'/',
-				'phpoop.local',
+				App::call()->config['site'],
 				true,
 				true
 			);
 		}
 
-		public static function isAdmin(): bool
+		public function isAdmin(): bool
 		{
 			return (isset($_SESSION['auth']['admin']) && $_SESSION['auth']['admin']);
 		}
 
-		public static function register()
+		public function register()
 		{
 			$error = null;
 			if (isset($_POST['reg_user'])) {
@@ -126,9 +109,9 @@
 
 				if (!empty($name) && !empty($email) && !empty($password) && !empty($login)) {
 					$user = new User(null, $login, $password, $name, $email, null);
-					if ($user->insert() > 0) {
+					if ($this->insert($user) > 0) {
 
-						self::loginUser($login, true);
+						$this->loginUser($login, true);
 						header('Location: /user/home');
 					}
 				} else {
@@ -139,8 +122,13 @@
 			}
 		}
 
-		public static function getTableName(): string
+		public function getTableName()
 		{
 			return 'users';
+		}
+
+		public function getEntityClass()
+		{
+			return User::class;
 		}
 	}

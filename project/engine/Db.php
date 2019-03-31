@@ -2,22 +2,19 @@
 
 	namespace app\engine;
 
-	use app\traits\Tsingletone;
-
 	class Db
 	{
-		use Tsingletone;
+		private $config;
 
-		static public $chosenToStringMethod;
-
-		private $config = [
-			'drive'    => 'mysql',
-			'host'     => 'localhost',
-			'login'    => 'root',
-			'password' => '',
-			'database' => 'shop',
-			'charset'  => 'utf8',
-		];
+		public function __construct($driver, $host, $login, $password, $database, $charset = 'utf8')
+		{
+			$this->config['driver'] = $driver;
+			$this->config['host'] = $host;
+			$this->config['login'] = $login;
+			$this->config['password'] = $password;
+			$this->config['database'] = $database;
+			$this->config['charset'] = $charset;
+		}
 
 		private $connection = null;
 
@@ -42,7 +39,7 @@
 		private function prepareDsnStr(): string
 		{
 			return sprintf('%s:host=%s;dbname=%s;charset=%s',
-				$this->config['drive'],
+				$this->config['driver'],
 				$this->config['host'],
 				$this->config['database'],
 				$this->config['charset']);
