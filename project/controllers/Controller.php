@@ -28,13 +28,8 @@
 			if (method_exists($this, $method)) {
 				$this->$method();
 			} else {
-				echo $this->render404();
+				echo $this->render('404', ['message' => 'Something went wrong.<br/>Get a hold of yourself!']);
 			}
-		}
-
-		public function render404($params = ['message' => 'Something went wrong. Get a hold of yourself!']): string
-		{
-			return $this->render('404', $params);
 		}
 
 		public function render($template, $params = []): string

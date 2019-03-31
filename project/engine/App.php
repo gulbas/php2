@@ -1,6 +1,8 @@
 <?php
 
 	namespace app\engine;
+
+	use app\controllers\RequestErrorController;
 	use app\model\repositories\CartRepository;
 	use app\model\repositories\OrderItemRepository;
 	use app\model\repositories\OrdersRepository;
@@ -57,9 +59,6 @@
 				$class = $params['class'];
 				if (class_exists($class)) {
 					unset($params['class']);
-					//воспользуемся библиотекой ReflectionClass для создания класса
-					//просто return new $class нельзя
-					// т.к. не будут переданы параметры для конструктора
 					$reflection = new \ReflectionClass($class);
 					return $reflection->newInstanceArgs($params);
 
@@ -75,9 +74,19 @@
 
 			$controllerClass = $this->config['controllers_namespaces'] . ucfirst($this->controller) . 'Controller';
 
-			if (class_exists($controllerClass)) {
-				$controller = new $controllerClass(new TwigRender());
-				$controller->runAction($this->action);
+			try {
+				if (class_exists($controllerClass)) {
+					$controller = new $controllerClass(new TwigRender());
+					$controller->runAction($this->action);
+				} else {
+					throw new \Exception('Нет такого контроллера.');
+				}
+			} catch (\PDOException $e) {
+				$message = "Ошибка PDO! {$e->getMessage()}";
+				(new RequestErrorController(new TwigRender()))->actionIndex($message);
+			} catch (\Exception $e) {
+				$message = $e->getMessage();
+				(new RequestErrorController(new TwigRender()))->actionIndex($message);
 			}
 		}
 
