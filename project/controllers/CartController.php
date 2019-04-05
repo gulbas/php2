@@ -2,8 +2,8 @@
 
 	namespace app\controllers;
 
+	use app\engine\App;
 	use app\engine\Request;
-	use app\model\{Cart, User};
 	use app\interfaces\IRenderer;
 
 	class CartController extends Controller
@@ -20,15 +20,15 @@
 		{
 			$id = $this->request->getParams()['id'];
 			$quantity = $this->request->getParams()['quantity'];
-			Cart::addProduct($id, $quantity);
+			App::call()->cartRepository->addProduct($id, $quantity);
 		}
 
 		public function actionIndex(): void
 		{
-			$cart = Cart::getCart();
+			$cart = App::call()->cartRepository->getCart();
 			echo $this->render('cart', [
 					'cart'         => $cart,
-					'isLoggedUser' => User::isLoggedUser(),
+					'isLoggedUser' => App::call()->userRepository->isLoggedUser(),
 				]
 			);
 		}
@@ -36,6 +36,6 @@
 		public function actionRemove(): void
 		{
 			$id = $this->request->getParams()['id'];
-			Cart::delCartItem((int)$id);
+			App::call()->cartRepository->delCartItem((int)$id);
 		}
 	}

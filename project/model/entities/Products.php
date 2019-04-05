@@ -1,15 +1,15 @@
 <?php
 
-	namespace app\model;
+	namespace app\model\entities;
 
-	class Products extends DbModel
+	class Products extends DataEntity
 	{
-		protected $id;
-		protected $name;
-		protected $description;
-		protected $price;
-		protected $quantity;
-		protected $category_id;
+		public $id;
+		public $name;
+		public $description;
+		public $price;
+		public $quantity;
+		public $category_id;
 		protected $properties = [
 			'id'          => false,
 			'name'        => false,
@@ -114,10 +114,5 @@
 			$this->price = $price;
 			$this->quantity = $quantity;
 			$this->category_id = $category_id;
-		}
-
-		public static function getTableName(): string
-		{
-			return 'products';
 		}
 	}

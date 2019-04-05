@@ -1,18 +1,21 @@
 <?php
 
-	namespace app\model;
+	namespace app\model\repositories;
 
+	use app\engine\App;
 	use app\engine\Render;
+	use app\model\entities\Cart;
+	use app\model\Repository;
 
-	class Cart extends DbModel
+	class CartRepository extends Repository
 	{
-		public static $id;
+		public $id;
 
-		public static function addProduct(int $id, $quantity): void
+		public function addProduct(int $id, $quantity): void
 		{
 			$result = [];
 			if (isset($id)) {
-				static::$id = $id;
+				$this->$id = $id;
 
 				if (isset($_SESSION['cart'])) {
 					$exist = -1;
@@ -64,12 +67,12 @@
 			(new Render())->renderJson($result);
 		}
 
-		public static function getCart(): array
+		public function getCart(): array
 		{
 			$cart = [];
 			if (isset($_SESSION['cart'])) {
 				foreach ($_SESSION['cart']['items'] as $key => $item) {
-					$product = Products::getOne($item['id']);
+					$product = App::call()->productRepository->getOne($item['id']);
 					$cart[] = [
 						'id'       => $item['id'],
 						'name'     => $product['name'],
@@ -81,7 +84,7 @@
 			return $cart;
 		}
 
-		public static function delCartItem($id): void
+		public function delCartItem($id): void
 		{
 			foreach ($_SESSION['cart']['items'] as $key => $item) {
 				if ($item['id'] === $id) {
@@ -92,8 +95,13 @@
 			header('Location: /cart');
 		}
 
-		public static function getTableName(): string
+		public function getTableName()
 		{
 			return 'cart';
+		}
+
+		public function getEntityClass()
+		{
+			return Cart::class;
 		}
 	}

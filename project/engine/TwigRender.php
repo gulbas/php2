@@ -12,7 +12,7 @@
 
 		public function __construct()
 		{
-			$loader = new FilesystemLoader(TWIG_DIR);
+			$loader = new FilesystemLoader(App::call()->config['twig_dir']);
 			$this->twig = new Environment($loader);
 		}
 

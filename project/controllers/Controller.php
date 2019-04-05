@@ -2,8 +2,9 @@
 
 	namespace app\controllers;
 
+	use app\engine\App;
 	use app\interfaces\IRenderer;
-	use app\model\{User, Visited};
+	use app\model\{Visited};
 
 	class Controller implements IRenderer
 	{
@@ -27,13 +28,8 @@
 			if (method_exists($this, $method)) {
 				$this->$method();
 			} else {
-				echo $this->render404();
+				echo $this->render('404', ['message' => 'Something went wrong.<br/>Get a hold of yourself!']);
 			}
-		}
-
-		public function render404($params = ['message' => 'Something went wrong. Get a hold of yourself!']): string
-		{
-			return $this->render('404', $params);
 		}
 
 		public function render($template, $params = []): string
@@ -50,8 +46,8 @@
 				return $this->renderTemplate("layouts/{$this->layout}",
 					['content'      => $this->renderTemplate($template, $params),
 					 'count'        => $quantityOfGoodsInTheCart,
-					 'isLoggedUser' => User::isLoggedUser(),
-					 'isAdmin'      => User::isAdmin()]);
+					 'isLoggedUser' => App::call()->userRepository->isLoggedUser(),
+					 'isAdmin'      => App::call()->userRepository->isAdmin()]);
 			}
 			return $this->renderTemplate($template, $params);
 		}
